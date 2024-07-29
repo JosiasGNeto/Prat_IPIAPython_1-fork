@@ -218,7 +218,7 @@ class AVLTreeInterface:
         self.search_button.grid(row=2, column=2)
         # --------------------------------------------------------------------------------------------------------------- #
 
-    # ---------------------------------------- Insertar Clave En El Interface ------------------------------------------- #
+    # ----------------------------------------- Insertar Clave En El Interfaz ------------------------------------------- #
 
     def insert_key(self):
         try:
@@ -229,7 +229,7 @@ class AVLTreeInterface:
         except ValueError:
             messagebox.showerror("Entrada no válida", "Ingrese un número entero válido.")
 
-    # ----------------------------------------- Borrar Clave En El Interface -------------------------------------------- #
+    # ------------------------------------------ Borrar Clave En El Interfaz -------------------------------------------- #
 
     def delete_key(self):
         try:
@@ -240,7 +240,7 @@ class AVLTreeInterface:
         except ValueError:
             messagebox.showerror("Entrada no válida", "Ingrese un número entero válido.")
 
-    # ------------------------------------------ Buscar Clave En El Interface ------------------------------------------- #
+    # ------------------------------------------- Buscar Clave En El Interfaz ------------------------------------------- #
 
     def search_key(self):
         try:
@@ -255,7 +255,7 @@ class AVLTreeInterface:
         except ValueError:
             messagebox.showerror("Entrada no válida", "Ingrese un número entero válido.")
 
-    # ----------------------------------------- Update del Canvas (Interface) ------------------------------------------- #
+    # ------------------------------------------ Update del Canvas (Interfaz) ------------------------------------------- #
 
     def update_canvas(self, path=None):
         self.canvas.delete("all")
