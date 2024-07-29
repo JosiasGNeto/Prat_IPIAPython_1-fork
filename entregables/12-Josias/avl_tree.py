@@ -26,7 +26,7 @@ class Node:
 
         self.key    = key         # · LLave 
         self.height = height      # · Altura 
-        self.left    = left       # · Izquierda 
+        self.left   = left        # · Izquierda 
         self.right  = right       # · Derecha
 
     # ------------------------------------------------------------------------------------------------------------------- #
@@ -105,7 +105,7 @@ class AVLTree:
 
         return node
 
-    # --------------------------- Encontrar el nodo con el valor mínimo en un subárbol ------------------------------ #
+    # ----------------------------- Encontrar el nodo con el valor mínimo en un subárbol -------------------------------- #
 
     def min_value_node(self, node):
         current = node
@@ -113,7 +113,7 @@ class AVLTree:
             current = current.left
         return current  
 
-    # --------------------------------------- Borrar una clave en el árbol ------------------------------------------ #
+    # ----------------------------------------- Borrar una clave en el árbol -------------------------------------------- #
 
     def delete(self, node, key):
         if not node:
@@ -151,7 +151,7 @@ class AVLTree:
 
         return node
 
-    # --------------------------------------- Buscar una clave en el árbol ------------------------------------------ #
+    # ----------------------------------------- Buscar una clave en el árbol -------------------------------------------- #
 
     def search(self, node, key, path = None):
         if path is None:
@@ -170,43 +170,55 @@ class AVLTree:
 # ============================================ Clase Para Renderizar El Árbol =========================================== #
 
 class AVLTreeInterface:
-    def __init__(self, root):
+
+    def __init__(self, root): # <------------------------------------------------------------------------- Inicialización #
         self.tree = AVLTree()
         self.root_node = None
 
         self.root = root
-        self.root.title("Visualización del Árbol AVL")
-        self.root.resizable(False, False)
+
+        self.root.title("Visualización del Árbol AVL")                                   # · Título de la interfaz      · #
+        self.root.resizable(False, False)                                                # · Bloqueo de escala          · #
 
         self.frame = tk.Frame(self.root)
         self.frame.pack()
 
-        self.canvas = tk.Canvas(self.frame, width = 800, height = 500, bg = 'white')
+        self.canvas = tk.Canvas(self.frame, width = 800, height = 500, bg = 'white')     # · Ancho y Altura             · #
         self.canvas.pack()
 
         self.controls = tk.Frame(self.root)
         self.controls.pack()
 
+        # ------------------------------------------------ BOTONES ------------------------------------------------------ #
+
+        # ---------------------------------------------------------------------------> Botón de Insertar <--------------- #
         self.insert_label = tk.Label(self.controls, text="Insertar:")
         self.insert_label.grid(row=0, column=0)
         self.insert_entry = tk.Entry(self.controls)
         self.insert_entry.grid(row=0, column=1)
         self.insert_button = tk.Button(self.controls, text="Insertar", command=self.insert_key)
         self.insert_button.grid(row=0, column=2)
+        # --------------------------------------------------------------------------------------------------------------- #
 
+        # -----------------------------------------------------------------------------> Botón de Borrar <--------------- #
         self.delete_label = tk.Label(self.controls, text="Borrar:")
         self.delete_label.grid(row=1, column=0)
         self.delete_entry = tk.Entry(self.controls)
         self.delete_entry.grid(row=1, column=1)
         self.delete_button = tk.Button(self.controls, text="Borrar", command=self.delete_key)
         self.delete_button.grid(row=1, column=2)
+        # --------------------------------------------------------------------------------------------------------------- #
 
+        # -----------------------------------------------------------------------------> Botón de Buscar <--------------- #
         self.search_label = tk.Label(self.controls, text="Buscar:")
         self.search_label.grid(row=2, column=0)
         self.search_entry = tk.Entry(self.controls)
         self.search_entry.grid(row=2, column=1)
         self.search_button = tk.Button(self.controls, text="Buscar", command=self.search_key)
         self.search_button.grid(row=2, column=2)
+        # --------------------------------------------------------------------------------------------------------------- #
+
+    # ---------------------------------------- Insertar Clave En El Interface ------------------------------------------- #
 
     def insert_key(self):
         try:
@@ -217,6 +229,8 @@ class AVLTreeInterface:
         except ValueError:
             messagebox.showerror("Entrada no válida", "Ingrese un número entero válido.")
 
+    # ----------------------------------------- Borrar Clave En El Interface -------------------------------------------- #
+
     def delete_key(self):
         try:
             key = int(self.delete_entry.get())
@@ -225,6 +239,8 @@ class AVLTreeInterface:
             self.update_canvas()
         except ValueError:
             messagebox.showerror("Entrada no válida", "Ingrese un número entero válido.")
+
+    # ------------------------------------------ Buscar Clave En El Interface ------------------------------------------- #
 
     def search_key(self):
         try:
@@ -239,10 +255,14 @@ class AVLTreeInterface:
         except ValueError:
             messagebox.showerror("Entrada no válida", "Ingrese un número entero válido.")
 
+    # ----------------------------------------- Update del Canvas (Interface) ------------------------------------------- #
+
     def update_canvas(self, path=None):
         self.canvas.delete("all")
         if self.root_node:
             self.draw_node(self.root_node, 400, 50, 200, path)
+
+    # ----------------------------------------------- Dibujar los Nodos ------------------------------------------------- #
 
     def draw_node(self, node, x, y, dx, path, highlight=False):
         if node:
@@ -256,11 +276,13 @@ class AVLTreeInterface:
                 self.canvas.create_line(x, y, x+dx, y+50)
                 self.draw_node(node.right, x+dx, y+50, dx//2, path, node.right.key in path if path else False)
 
+# ======================================================================================================================= #
+
+# ····· Crear Instancia de la Interfaz Gráfica ····· #
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = AVLTreeInterface(root)
     root.mainloop()
 
-        # --------------------------------------------------------------------------------------------------------------- #
-
-    # ------------------------------------------------------------------------------------------------------------------- #
+#··················································· #
