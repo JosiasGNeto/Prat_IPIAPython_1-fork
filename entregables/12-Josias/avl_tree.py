@@ -138,16 +138,20 @@ class AVLTree:
         node.height = 1 + max(self.get_height(node.left), self.get_height(node.right))
         balance = self.get_balance(node)
 
-        if balance > 1 and self.get_balance(node.left) >= 0:
+        # -----------> Balancear El Árbol <------------------------------------------------------ #
+
+        if balance > 1 and self.get_balance(node.left) >= 0:   # · Desbalance a la Izquierda    · #
             return self.right_rotate(node)
-        if balance > 1 and self.get_balance(node.left) < 0:
+        if balance > 1 and self.get_balance(node.left) < 0:    # · Desbalance a la Derecha      · #
             node.left = self.left_rotate(node.left)
             return self.right_rotate(node)
-        if balance < -1 and self.get_balance(node.right) <= 0:
+        if balance < -1 and self.get_balance(node.right) <= 0: # · Desbalance Izquierda-Derecha · #
             return self.left_rotate(node)
-        if balance < -1 and self.get_balance(node.right) > 0:
+        if balance < -1 and self.get_balance(node.right) > 0:  # · Desbalance Derecha-Izquierda · #
             node.right = self.right_rotate(node.right)
             return self.left_rotate(node)
+        
+        # --------------------------------------------------------------------------------------- #
 
         return node
 
@@ -217,6 +221,12 @@ class AVLTreeInterface:
         self.search_button = tk.Button(self.controls, text="Buscar", command=self.search_key)
         self.search_button.grid(row=2, column=2)
         # --------------------------------------------------------------------------------------------------------------- #
+
+        # Adicionar opción de usar [ENTER] ---------------------------------|
+        self.insert_entry.bind("<Return>", lambda event: self.insert_key())
+        self.delete_entry.bind("<Return>", lambda event: self.delete_key())
+        self.search_entry.bind("<Return>", lambda event: self.search_key())
+        #------------------------------------------------------------------ |
 
     # ----------------------------------------- Insertar Clave En El Interfaz ------------------------------------------- #
 
