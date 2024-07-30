@@ -11,6 +11,7 @@
 
 # ················ Importes ················ #
 
+import time
 import tkinter as tk
 from tkinter import messagebox
 
@@ -233,7 +234,11 @@ class AVLTreeInterface:
     def insert_key(self):
         try:
             key = int(self.insert_entry.get())
+            start_time = time.time()
             self.root_node = self.tree.insert(self.root_node, key)
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            print(f"Tiempo de ejecución para insertar {key}: {elapsed_time:.10f} segundos")
             self.insert_entry.delete(0, tk.END)
             self.update_canvas()
         except ValueError:
@@ -244,7 +249,11 @@ class AVLTreeInterface:
     def delete_key(self):
         try:
             key = int(self.delete_entry.get())
+            start_time = time.time()
             self.root_node = self.tree.delete(self.root_node, key)
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            print(f"Tiempo de ejecución para insertar {key}: {elapsed_time:.10f} segundos")
             self.delete_entry.delete(0, tk.END)
             self.update_canvas()
         except ValueError:
@@ -255,7 +264,11 @@ class AVLTreeInterface:
     def search_key(self):
         try:
             key = int(self.search_entry.get())
+            start_time = time.time()
             node, path = self.tree.search(self.root_node, key)
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            print(f"Tiempo de ejecución para insertar {key}: {elapsed_time:.10f} segundos")
             self.search_entry.delete(0, tk.END)
             if node:
                 messagebox.showinfo("Resultado de Búsqueda", f"Key {key} encontrado. Camino: {' -> '.join(map(str, path))}")
