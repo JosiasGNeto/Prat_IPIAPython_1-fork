@@ -305,7 +305,7 @@ class AVLTreeInterface:
                 self.root_node = self.tree.insert(self.root_node, i)
             end_time = time.time()
             elapsed_time = end_time - start_time
-            print(f"Tiempo de ejecución para insertar {count} dados: {elapsed_time:.10f} segundos")
+            print(f"Tiempo de ejecución para insertar {count} datos: {elapsed_time:.10f} segundos")
             self.auto_insert_entry.delete(0, tk.END)
             self.update_canvas()
         except ValueError as e:
