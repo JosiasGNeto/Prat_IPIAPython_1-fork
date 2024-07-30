@@ -188,7 +188,7 @@ class AVLTreeInterface:
         self.frame = tk.Frame(self.root)
         self.frame.pack()
 
-        self.canvas = tk.Canvas(self.frame, width = 800, height = 500, bg = 'white')     # · Ancho y Altura             · #
+        self.canvas = tk.Canvas(self.frame, width = 1200, height = 500, bg = 'white')     # · Ancho y Altura            · #
         self.canvas.pack()
 
         self.controls = tk.Frame(self.root)
@@ -196,38 +196,53 @@ class AVLTreeInterface:
 
         # ------------------------------------------------ BOTONES ------------------------------------------------------ #
 
+        button_width = 15                                                                # · Ancho de los Botones       · #
+        button_height = 1                                                                # · Altura de los Botones      · #
+
         # ---------------------------------------------------------------------------> Botón de Insertar <--------------- #
         self.insert_label = tk.Label(self.controls, text="Insertar:")
-        self.insert_label.grid(row=0, column=0)
+        self.insert_label.grid(row=0, column=0, padx=5, pady=5, sticky='w')
         self.insert_entry = tk.Entry(self.controls)
-        self.insert_entry.grid(row=0, column=1)
-        self.insert_button = tk.Button(self.controls, text="Insertar", command=self.insert_key)
-        self.insert_button.grid(row=0, column=2)
+        self.insert_entry.grid(row=0, column=1, padx=5, pady=5)
+        self.insert_button = tk.Button(self.controls, text="Insertar", width=button_width, height=button_height, command=self.insert_key)
+        self.insert_button.grid(row=0, column=2, padx=5, pady=5, sticky='ew')
         # --------------------------------------------------------------------------------------------------------------- #
 
         # -----------------------------------------------------------------------------> Botón de Borrar <--------------- #
         self.delete_label = tk.Label(self.controls, text="Borrar:")
-        self.delete_label.grid(row=1, column=0)
+        self.delete_label.grid(row=1, column=0, padx=5, pady=5, sticky='w')
         self.delete_entry = tk.Entry(self.controls)
-        self.delete_entry.grid(row=1, column=1)
-        self.delete_button = tk.Button(self.controls, text="Borrar", command=self.delete_key)
-        self.delete_button.grid(row=1, column=2)
+        self.delete_entry.grid(row=1, column=1, padx=5, pady=5)
+        self.delete_button = tk.Button(self.controls, text="Borrar", width=button_width, height=button_height, command=self.delete_key)
+        self.delete_button.grid(row=1, column=2, padx=5, pady=5, sticky='ew')
         # --------------------------------------------------------------------------------------------------------------- #
 
         # -----------------------------------------------------------------------------> Botón de Buscar <--------------- #
         self.search_label = tk.Label(self.controls, text="Buscar:")
-        self.search_label.grid(row=2, column=0)
+        self.search_label.grid(row=2, column=0, padx=5, pady=5, sticky='w')
         self.search_entry = tk.Entry(self.controls)
-        self.search_entry.grid(row=2, column=1)
-        self.search_button = tk.Button(self.controls, text="Buscar", command=self.search_key)
-        self.search_button.grid(row=2, column=2)
+        self.search_entry.grid(row=2, column=1, padx=5, pady=5)
+        self.search_button = tk.Button(self.controls, text="Buscar", width=button_width,
+        height=button_height, command=self.search_key)
+        self.search_button.grid(row=2, column=2, padx=5, pady=5, sticky='ew')
         # --------------------------------------------------------------------------------------------------------------- #
 
-        # Adicionar opción de usar [ENTER] ---------------------------------|
+        # ------------------------------------------------------------------> Botón de Buscar Automático <--------------- #
+        self.auto_insert_label = tk.Label(self.controls, text="Insertar Auto:")
+        self.auto_insert_label.grid(row=3, column=0, padx=5, pady=5, sticky='w')
+        self.auto_insert_entry = tk.Entry(self.controls)
+        self.auto_insert_entry.grid(row=3, column=1, padx=5, pady=5)
+        self.auto_insert_button = tk.Button(self.controls, text="Insertar", 
+        width=button_width, height=button_height, command=self.insert_range)
+        self.auto_insert_button.grid(row=3, column=2, padx=5, pady=5, sticky='ew')
+        # --------------------------------------------------------------------------------------------------------------- #
+
+        # Adicionar opción de usar [ENTER] ----------------------------------------|
         self.insert_entry.bind("<Return>", lambda event: self.insert_key())
         self.delete_entry.bind("<Return>", lambda event: self.delete_key())
         self.search_entry.bind("<Return>", lambda event: self.search_key())
-        #------------------------------------------------------------------ |
+        self.auto_insert_entry.bind("<Return>", lambda event: self.insert_range())
+        #------------------------------------------------------------------------- |
 
     # ----------------------------------------- Insertar Clave En El Interfaz ------------------------------------------- #
 
@@ -278,12 +293,30 @@ class AVLTreeInterface:
         except ValueError:
             messagebox.showerror("Entrada no válida", "Ingrese un número entero válido.")
 
+    # --------------------------------- Insertar Claves Automáticamente En El Interfaz ---------------------------------- #
+    
+    def insert_range(self):
+        try:
+            count = int(self.auto_insert_entry.get())
+            if count <= 0:
+                raise ValueError("El número debe ser mayor que cero.")
+            start_time = time.time()
+            for i in range(1, count + 1):
+                self.root_node = self.tree.insert(self.root_node, i)
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            print(f"Tiempo de ejecución para insertar {count} dados: {elapsed_time:.10f} segundos")
+            self.auto_insert_entry.delete(0, tk.END)
+            self.update_canvas()
+        except ValueError as e:
+            messagebox.showerror("Entrada no válida", str(e))
+
     # ------------------------------------------ Update del Canvas (Interfaz) ------------------------------------------- #
 
     def update_canvas(self, path=None):
         self.canvas.delete("all")
         if self.root_node:
-            self.draw_node(self.root_node, 400, 50, 200, path)
+            self.draw_node(self.root_node, 600, 50, 200, path)
 
     # ----------------------------------------------- Dibujar los Nodos ------------------------------------------------- #
 
