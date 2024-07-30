@@ -276,7 +276,7 @@ class AVLTreeInterface:
 
     def draw_node(self, node, x, y, dx, path, highlight=False):
         if node:
-            color = "lightgreen" if highlight else "lightblue"
+            color = "lightgreen" if highlight else ("orange" if node == self.root_node else "lightblue")
             self.canvas.create_oval(x-20, y-20, x+20, y+20, fill=color, outline="blue", width=2)
             self.canvas.create_text(x, y, text=str(node.key))
             if node.left:
